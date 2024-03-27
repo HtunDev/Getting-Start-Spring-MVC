@@ -2,10 +2,13 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
   <display-name>getting-start-spring-mvc</display-name>
   <servlet>
-    <description></description>
-    <display-name>hello</display-name>
     <servlet-name>hello</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+    	<param-name>DispatcherServlet</param-name>
+    	<param-value>/WEB-INF/hello-servlet</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>hello</servlet-name>
