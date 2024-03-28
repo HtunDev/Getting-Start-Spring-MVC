@@ -1,29 +1,46 @@
 package com.HAH.mvc.initializer;
 
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
-import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class StudentAppInitializer extends AbstractDispatcherServletInitializer {
+import com.HAH.mvc.configuration.MVCConfig;
+import com.HAH.mvc.configuration.RootConfig;
+
+public class StudentAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
-	protected WebApplicationContext createServletApplicationContext() {
-		var rootContext = new XmlWebApplicationContext();
-		rootContext.setConfigLocation("/WEB-INF/root-config.xml");
-		return rootContext;
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class<?>[] { RootConfig.class };
 	}
 
 	@Override
-	protected WebApplicationContext createRootApplicationContext() {
-		var dispatcherServlet = new XmlWebApplicationContext();
-		dispatcherServlet.setConfigLocation("/WEB-INF/mvc-config.xml");
-		return dispatcherServlet;
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class<?>[] { MVCConfig.class };
 	}
 
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}
+
+//	Using AbstractDispatcherServletInitializer
+//	@Override
+//	protected WebApplicationContext createServletApplicationContext() {
+//		var rootContext = new XmlWebApplicationContext();
+//		rootContext.setConfigLocation("/WEB-INF/root-config.xml");
+//		return rootContext;
+//	}
+//
+//	@Override
+//	protected WebApplicationContext createRootApplicationContext() {
+//		var dispatcherServlet = new XmlWebApplicationContext();
+//		dispatcherServlet.setConfigLocation("/WEB-INF/mvc-config.xml");
+//		return dispatcherServlet;
+//	}
+//
+//	@Override
+//	protected String[] getServletMappings() {
+//		return new String[] { "/" };
+//	}
 
 //  This is webApplicationInitializer
 //	@Override
