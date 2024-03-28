@@ -1,34 +1,49 @@
 package com.HAH.mvc.initializer;
 
-import java.util.Set;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.servlet.support.AbstractDispatcherServletInitializer;
 
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.servlet.DispatcherServlet;
-
-public class StudentAppInitializer implements ServletContainerInitializer {
+public class StudentAppInitializer extends AbstractDispatcherServletInitializer {
 
 	@Override
-	public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
-
-		// Register Dispatcher Servlet
-		var ds = new DispatcherServlet();
-		ds.setContextConfigLocation("WEB-INF/mvc-config.xml");
-		var registerDS = ctx.addServlet("dispatcher", ds);
-
-		// Mapping Servlet
-		registerDS.addMapping("/");
-		registerDS.setLoadOnStartup(1);
-
-		// Set Context Paramter
-		ctx.setInitParameter("contextConfigLocation", "WEB-INF/root-config.xml");
-
-		// Application Context
-		var contextLoader = new ContextLoaderListener();
-		ctx.addListener(contextLoader);
+	protected WebApplicationContext createServletApplicationContext() {
+		var rootContext = new XmlWebApplicationContext();
+		rootContext.setConfigLocation("/WEB-INF/root-config.xml");
+		return rootContext;
 	}
+
+	@Override
+	protected WebApplicationContext createRootApplicationContext() {
+		var dispatcherServlet = new XmlWebApplicationContext();
+		dispatcherServlet.setConfigLocation("/WEB-INF/mvc-config.xml");
+		return dispatcherServlet;
+	}
+
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] { "/" };
+	}
+
+//  This is webApplicationInitializer
+//	@Override
+//	public void onStartup(ServletContext ctx) throws ServletException {
+//
+//		// Register Dispatcher Servlet
+//		var ds = new DispatcherServlet();
+//		ds.setContextConfigLocation("WEB-INF/mvc-config.xml");
+//		var registerDS = ctx.addServlet("dispatcher", ds);
+//
+//		// Mapping Servlet
+//		registerDS.addMapping("/");
+//		registerDS.setLoadOnStartup(1);
+//
+//		// Set Context Paramter
+//		ctx.setInitParameter("contextConfigLocation", "WEB-INF/root-config.xml");
+//
+//		// Application Context
+//		var contextLoader = new ContextLoaderListener();
+//		ctx.addListener(contextLoader);
+//	}
 
 }
