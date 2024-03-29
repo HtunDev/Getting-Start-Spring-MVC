@@ -15,7 +15,7 @@
 	</p>
 
 	<ul>
-		<li><c:url value="/legacy" var="legacyLink"></c:url> <a
+		<li><c:url value="/legacyController" var="legacyLink"></c:url> <a
 			href="${legacyLink}">Legacy Controller</a></li>
 	</ul>
 </body>
